@@ -6,10 +6,15 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
 {
     // /admin/posts
     [RouteArea("admin")]
-    [RoutePrefix("post")]
+    [RoutePrefix("posts")]
     public class PostsController : Controller
     {
         private readonly IPostRepository _repository;
+
+        public PostsController()
+        {
+
+        }
 
         public PostsController(IPostRepository repository)
         {

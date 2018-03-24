@@ -1,0 +1,10 @@
+﻿@model asp_net_mvc_cms.Models.Post
+
+@{
+    ViewBag.Title = "Create New Post";
+    Layout = "~/Areas/Admin/Views/Posts/_PostLayout.cshtml";
+}
+
+<h2>Create a Post</h2>
+
+@Html.Partial("_PostForm", Model)
