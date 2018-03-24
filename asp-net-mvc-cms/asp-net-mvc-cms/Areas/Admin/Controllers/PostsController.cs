@@ -1,5 +1,6 @@
 ﻿using asp_net_mvc_cms.Data;
 using asp_net_mvc_cms.Models;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace asp_net_mvc_cms.Areas.Admin.Controllers
@@ -11,10 +12,7 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
     {
         private readonly IPostRepository _repository;
 
-        public PostsController()
-        {
-
-        }
+        public PostsController() : this(new PostRepository()) { } // FOR: No parameterless constructor defined for this object.
 
         public PostsController(IPostRepository repository)
         {
@@ -34,7 +32,7 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
         [Route("create")]
         public ActionResult Create()
         {
-            var post = new Post();
+            var post = new Post() { Tags = new List<string> { "test-1", "test-2" } };
 
             return View(post);
         }

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<string>
+
+@{
+    ViewBag.Title = "Tags";
+    Layout = "~/Areas/Admin/Views/Posts/_PostLayout.cshtml";
+}
+
+<h2>Tags</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Tag Name
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { tag = item }) |
+                @Html.ActionLink("Delete", "Delete", new { tag = item })
+            </td>
+        </tr>
+    }
+</table>
