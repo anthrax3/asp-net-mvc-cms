@@ -1,0 +1,32 @@
+﻿using asp_net_mvc_cms.Data;
+using asp_net_mvc_cms.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+
+namespace asp_net_mvc_cms.App_Start
+{
+    public class AuthDbConfig
+    {
+        public static void RegisterAdmin()
+        {
+            using (var context = new CmsContext())
+            using (var userStore = new UserStore<CmsUser>(context))
+            using (var userManager = new UserManager<CmsUser>(userStore))
+            {
+                var user = userStore.FindByNameAsync("admin").Result;
+
+                if (user == null)
+                {
+                    var adminUser = new CmsUser
+                    {
+                        UserName = "admin",
+                        Email = "admin@cms.com",
+                        DisplayName = "administrator"
+                    };
+
+                    userManager.Create(adminUser, "Passw0rd1234");
+                }
+            }
+        }
+    }
+}
