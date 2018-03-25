@@ -158,6 +158,8 @@
     <Content Include="Areas\Admin\Views\Tags\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Tags\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\TagEditor.cshtml" />
+    <Content Include="Areas\Admin\Views\Posts\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Posts\Delete.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

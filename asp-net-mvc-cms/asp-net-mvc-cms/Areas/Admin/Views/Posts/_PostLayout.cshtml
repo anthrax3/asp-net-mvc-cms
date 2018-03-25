@@ -2,4 +2,8 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
+<p>
+    @Html.ActionLink("Create a New Post", "Create", "Post", new { Area = "Admin" })
+</p>
+
 @RenderBody()

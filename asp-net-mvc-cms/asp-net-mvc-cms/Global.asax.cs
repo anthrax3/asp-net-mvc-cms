@@ -10,8 +10,11 @@ namespace asp_net_mvc_cms
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            // Previous this is first but because we used Attribute Routing it change
+            AreaRegistration.RegisterAllAreas();
+
             AuthDbConfig.RegisterAdmin();
             ModelBinders.Binders.Add(typeof(Post), new PostModelBinder());
         }

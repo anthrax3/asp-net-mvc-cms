@@ -31,7 +31,7 @@ namespace asp_net_mvc_cms.Data
             {
                 var post_check = db.Posts.FirstOrDefault(p => p.Id == post.Id);
 
-                if (post != null)
+                if (post_check != null)
                 {
                     throw new ArgumentException("A post with the id of "
                         + post.Id + " already exists.");
@@ -57,8 +57,8 @@ namespace asp_net_mvc_cms.Data
                 post_check.Id = post.Id;
                 post_check.Title = post.Title;
                 post_check.Content = post.Content;
-                post.Published = post.Published;
-                post.Tags = post.Tags;
+                post_check.Published = post.Published;
+                post_check.Tags = post.Tags;
 
                 db.SaveChanges();
             }

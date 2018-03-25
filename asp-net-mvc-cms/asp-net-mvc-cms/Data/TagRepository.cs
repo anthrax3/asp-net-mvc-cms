@@ -10,7 +10,9 @@ namespace asp_net_mvc_cms.Data
         {
             using (var db = new CmsContext())
             {
-                var posts = db.Posts.Where(p =>
+                var posts = db.Posts.Where(p => p.CombinedTags.Contains(tag)).ToList();
+
+                posts = posts.Where(p =>
                 p.Tags.Contains(tag, StringComparer.CurrentCultureIgnoreCase))
                      .ToList();
 
@@ -32,7 +34,9 @@ namespace asp_net_mvc_cms.Data
         {
             using (var db = new CmsContext())
             {
-                var posts = db.Posts.Where(p =>
+                var posts = db.Posts.Where(p => p.CombinedTags.Contains(tag)).ToList();
+
+                posts = posts.Where(p =>
                 p.Tags.Contains(tag, StringComparer.CurrentCultureIgnoreCase))
                      .ToList();
 
@@ -55,7 +59,9 @@ namespace asp_net_mvc_cms.Data
         {
             using (var db = new CmsContext())
             {
-                return db.Posts.SelectMany(p => p.Tags).Distinct();
+                var tags_collection = db.Posts.Select(p => p.CombinedTags).ToList();
+
+                return string.Join(",", tags_collection).Split(',').Distinct();
             }
         }
 
@@ -63,8 +69,9 @@ namespace asp_net_mvc_cms.Data
         {
             using (var db = new CmsContext())
             {
-                var posts = db.Posts.Where(p =>
-                p.Tags.Contains(tag, StringComparer.CurrentCultureIgnoreCase))
+                var posts = db.Posts.Where(p => p.CombinedTags.Contains(tag)).ToList();
+
+                posts = posts.Where(p => p.Tags.Contains(tag, StringComparer.CurrentCultureIgnoreCase))
                      .ToList();
 
                 if (!posts.Any())

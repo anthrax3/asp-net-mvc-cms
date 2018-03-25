@@ -13,6 +13,9 @@ namespace asp_net_mvc_cms
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // TO AVOID: 404 because attribute routing
+            routes.MapMvcAttributeRoutes();
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

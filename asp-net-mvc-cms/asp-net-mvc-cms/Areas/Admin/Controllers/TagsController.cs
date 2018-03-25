@@ -5,9 +5,13 @@ using System.Web.Mvc;
 
 namespace asp_net_mvc_cms.Areas.Admin.Controllers
 {
+    [RouteArea("admin")]
+    [RoutePrefix("tags")]
     public class TagsController : Controller
     {
         private readonly ITagRepository _repository;
+
+        public TagsController() : this(new TagRepository()) { }
 
         public TagsController(ITagRepository repository)
         {
@@ -15,6 +19,7 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
         }
 
         // GET: Admin/Tags
+        [Route("")]
         public ActionResult Index()
         {
             var tags = _repository.GetAll();
@@ -23,13 +28,14 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Route("edit/{tag}")]
         public ActionResult Edit(string tag)
         {
             try
             {
                 var tag_check = _repository.Get(tag);
 
-                return View(tag_check);
+                return View(model: tag_check);
             }
             catch (KeyNotFoundException e)
             {
@@ -38,6 +44,7 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Route("edit/{tag}")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(string tag, string newTag)
         {
@@ -57,7 +64,7 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("key", "New tag value cannot be empty.");
 
-                return View(tag);
+                return View(model: tag);
             }
 
             _repository.Edit(tag, newTag);
@@ -66,13 +73,14 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Route("delete/{tag}")]
         public ActionResult Delete(string tag)
         {
             try
             {
                 var tag_check = _repository.Get(tag);
 
-                return View(tag_check);
+                return View(model: tag_check);
             }
             catch (KeyNotFoundException e)
             {
@@ -82,6 +90,7 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
 
         [HttpPost]
         [ActionName("Delete")]
+        [Route("delete/{tag}")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string tag)
         {

@@ -1,0 +1,14 @@
+﻿@model asp_net_mvc_cms.Models.Post
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Posts/_PostLayout.cshtml";
+}
+
+<h2>Delete @Model.Title</h2>
+
+@using (var form = Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <input type="submit" name="submit" value="Submit" />
+}

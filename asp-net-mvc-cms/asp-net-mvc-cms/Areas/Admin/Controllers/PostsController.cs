@@ -22,6 +22,7 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
         }
 
         // GET: admin/posts
+        [Route("")]
         public ActionResult Index()
         {
             var posts = _repository.GetAll();
@@ -55,6 +56,8 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
 
             post.Id = post.Id.MakeUrlFriendly();
             post.Tags = post.Tags.Select(tag => tag.MakeUrlFriendly()).ToList();
+            post.Created = DateTime.Now;
+            post.AuthorId = "5481f221-5fc1-4cc2-ab21-43ece16e9ed3";
 
             try
             {
@@ -115,7 +118,7 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("key", e);
+                ModelState.AddModelError(string.Empty, e.Message);
 
                 return View(post);
             }
