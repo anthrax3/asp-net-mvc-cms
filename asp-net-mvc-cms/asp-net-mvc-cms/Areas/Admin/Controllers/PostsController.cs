@@ -1,6 +1,8 @@
 ﻿using asp_net_mvc_cms.Data;
 using asp_net_mvc_cms.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace asp_net_mvc_cms.Areas.Admin.Controllers
@@ -32,9 +34,7 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
         [Route("create")]
         public ActionResult Create()
         {
-            var post = new Post() { Tags = new List<string> { "test-1", "test-2" } };
-
-            return View(post);
+            return View(new Post());
         }
 
         // /admin/posts/create
@@ -48,9 +48,25 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
                 return View(post);
             }
 
-            _repository.Create(post);
+            if (string.IsNullOrWhiteSpace(post.Id))
+            {
+                post.Id = post.Title;
+            }
 
-            return RedirectToAction("index");
+            post.Id = post.Id.MakeUrlFriendly();
+            post.Tags = post.Tags.Select(tag => tag.MakeUrlFriendly()).ToList();
+
+            try
+            {
+                _repository.Create(post);
+
+                return RedirectToAction("index");
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("key", e);
+                return View(post);
+            }
         }
 
         // /admin/post/edit/post-to-edit
@@ -74,21 +90,69 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(string postId, Post post)
         {
-            var post_id = _repository.Get(postId);
-
-            if (post_id == null)
-            {
-                return HttpNotFound();
-            }
-
             if (!ModelState.IsValid)
             {
                 return View(post);
             }
 
-            _repository.Edit(postId, post);
+            if (string.IsNullOrWhiteSpace(post.Id))
+            {
+                post.Id = post.Title;
+            }
 
-            return RedirectToAction("index");
+            post.Id = post.Id.MakeUrlFriendly();
+            post.Tags = post.Tags.Select(tag => tag.MakeUrlFriendly()).ToList();
+
+            try
+            {
+                _repository.Edit(postId, post);
+
+                return RedirectToAction("index");
+            }
+            catch (KeyNotFoundException e)
+            {
+                return HttpNotFound();
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("key", e);
+
+                return View(post);
+            }
+        }
+
+        // /admin/post/delete/post-to-edit
+        [HttpGet]
+        [Route("delete/{postId}")]
+        public ActionResult Delete(string postId)
+        {
+            var post = _repository.Get(postId);
+
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(post);
+        }
+
+        // /admin/post/delete/post-to-edit
+        [HttpPost]
+        [ActionName("Delete")]
+        [Route("delete/{postId}")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string postId)
+        {
+            try
+            {
+                _repository.Delete(postId);
+
+                return RedirectToAction("index");
+            }
+            catch (KeyNotFoundException e)
+            {
+                return HttpNotFound();
+            }
         }
     }
 }

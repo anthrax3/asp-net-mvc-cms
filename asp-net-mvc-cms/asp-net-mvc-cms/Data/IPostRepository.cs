@@ -11,6 +11,8 @@ namespace asp_net_mvc_cms.Data
 
         void Create(Post post);
 
+        void Delete(string id);
+
         IEnumerable<Post> GetAll();
     }
 }

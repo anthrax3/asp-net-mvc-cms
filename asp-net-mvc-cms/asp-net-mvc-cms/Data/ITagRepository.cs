@@ -6,10 +6,10 @@ namespace asp_net_mvc_cms.Data
     {
         IEnumerable<string> GetAll();
 
-        bool Exists(string tag);
-
         void Edit(string tag, string newTag);
 
         void Delete(string tag);
+
+        string Get(string tag);
     }
 }

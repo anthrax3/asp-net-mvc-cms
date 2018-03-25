@@ -1,4 +1,5 @@
 ﻿using asp_net_mvc_cms.Data;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -24,12 +25,16 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(string tag)
         {
-            if (_repository.Exists(tag))
+            try
+            {
+                var tag_check = _repository.Get(tag);
+
+                return View(tag_check);
+            }
+            catch (KeyNotFoundException e)
             {
                 return HttpNotFound();
             }
-
-            return View(tag);
         }
 
         [HttpPost]
@@ -63,12 +68,16 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Delete(string tag)
         {
-            if (_repository.Exists(tag))
+            try
+            {
+                var tag_check = _repository.Get(tag);
+
+                return View(tag_check);
+            }
+            catch (KeyNotFoundException e)
             {
                 return HttpNotFound();
             }
-
-            return View(tag);
         }
 
         [HttpPost]
@@ -76,14 +85,16 @@ namespace asp_net_mvc_cms.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string tag)
         {
-            if (!_repository.Exists(tag))
+            try
+            {
+                _repository.Delete(tag);
+
+                return RedirectToAction("index");
+            }
+            catch (KeyNotFoundException e)
             {
                 return HttpNotFound();
             }
-
-            _repository.Delete(tag);
-
-            return RedirectToAction("index");
         }
     }
 }
