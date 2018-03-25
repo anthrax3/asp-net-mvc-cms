@@ -131,11 +131,19 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\PostsController.cs" />
     <Compile Include="Areas\Admin\Controllers\TagsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\Services\UserService.cs" />
+    <Compile Include="Areas\Admin\ViewModels\UserViewModel.cs" />
     <Compile Include="Data\CmsContext.cs" />
+    <Compile Include="Data\IdentityClasses.cs" />
     <Compile Include="Data\IPostRepository.cs" />
+    <Compile Include="Data\IRoleRepository.cs" />
     <Compile Include="Data\ITagRepository.cs" />
+    <Compile Include="Data\IUserRepository.cs" />
     <Compile Include="Data\PostRepository.cs" />
+    <Compile Include="Data\RoleRepository.cs" />
     <Compile Include="Data\TagRepository.cs" />
+    <Compile Include="Data\UserRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -160,6 +168,9 @@
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\TagEditor.cshtml" />
     <Content Include="Areas\Admin\Views\Posts\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Posts\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Create.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
